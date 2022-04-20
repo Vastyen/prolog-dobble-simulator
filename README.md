@@ -27,20 +27,20 @@ Dobble es un juego de mesa de cartas, el maso se conforma de 55 cartas las cuale
 
   ### Uso
 
-        Clonar el repositorio https://github.com/vastien/prolog_202020917_EscribanoGomez.pl/edit/main/README.md
+        Clonar el repositorio (https://github.com/vastien/prolog_202020917_EscribanoGomez.pl/edit/main/README.md)
         
         Windows
         
                 $ cd Desktop
                 $ mkdir prologDobble
                 $ cd prologDobble
-                $ git clone https://github.com/vastien/prolog_202020917_EscribanoGomez.pl/edit/main/README.md
+                $ git clone (https://github.com/vastien/prolog_202020917_EscribanoGomez.pl/edit/main/README.md)
                 
         Unix (Linux and MacOS) 
         
                 $ mkdir prologDobble
                 $ cd prologDobble
-                $ git clone https://github.com/vastien/prolog_202020917_EscribanoGomez.pl/edit/main/README.md
+                $ git clone (https://github.com/vastien/prolog_202020917_EscribanoGomez.pl/edit/main/README.md)
 
         
 ## License
