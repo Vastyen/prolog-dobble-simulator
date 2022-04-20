@@ -1,5 +1,12 @@
-# Paradigma Lógico: Prolog
+# Paradigma Lógico con Prolog
+## Dobble con Prolog
 
+Universidad de Santiago de Chile            
+Departamento de Ingeniería Informática                
+Paradigma: Lógico           
+Fecha de Entrega: 6 mayo del 2022                     
+Lenguaje de Programación: Prolog               
+Desarrollador: Bastián Escribano - @vastien              
 
 ## Paradigma Lógico
 La programación lógica es un tipo de paradigma de programación dentro del paradigma de programación declarativa. 
