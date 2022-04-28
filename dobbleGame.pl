@@ -38,6 +38,18 @@ len( [_|Resto], Largo ) :-
 % ?- len([], Largo).
 % L=0.
 
+
+% 2.2 Agregar una lista a otra lista.
+extenderListas(ListaDeListas, ListaParaAgregar, NuevaLista):-
+    append(ListaDeListas, ListaParaAgregar, NuevaLista).
+   
+%% Consultas:
+%% extenderListas([[1,2],[3,4]],[[5,6]],L).
+% L = [[1, 2], [3, 4], [5, 6]]
+
+
+
+
 % --------------------------------
 % Tipo de Dato Abstracto: dobbleGame
 % --------------------------------
