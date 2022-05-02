@@ -125,12 +125,30 @@ encontrarCarta(0,[Salida|_],Carta):-
 encontrarCarta(NumeroCarta, [_|MazoCuerpo], Carta):-
     NumeroCarta2 is NumeroCarta-1,
     encontrarCarta(NumeroCarta2, MazoCuerpo, Carta).
-	
-    
 % Consultas
 % nthCard(0, 3, Carta).
 % Carta = [4, 3, 2, 1]
     
+
+%2.5 findTotalCards, a partir de una carta de muestra, determina cuantas
+% cartas pueden ser creadas.
+findTotalCards([], 0).
+findTotalCards(Carta, TotalCards):-
+   largoLista(Carta, Largo),
+   TotalCards is (Largo*Largo-Largo+1).
+
+% Consultas
+% findTotalCards([3,5,3,2], TotalCards).
+% TotalCards = 13
+
+% -------- En proceso --------------------------------
+%2.6 MissingCards.
+missingCards(NumeroCartas, TotalCards):-
+    crearMazo(NumeroCartas, Mazo),
+    largoLista(Mazo, LargoMazo),
+    TotalCards = LargoMazo.
+
+% -------- En proceso --------------------------------
 
 % ----------------------------------------------------
 % ----------------------------------------------------
@@ -147,6 +165,8 @@ encontrarCarta(NumeroCarta, [_|MazoCuerpo], Carta):-
 % ----------------------------------------------------
 % ----------------------------------------------------
 % ----------------------------------------------------
+
+
 
 
 
