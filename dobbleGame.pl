@@ -34,7 +34,7 @@
 % ----------------------------------------------------
 
 cardsSet(Elements, NumE, MaxC, Seed, CS):-
-    len(Elements, Largo),
+    largoLista(Elements, Largo),
     Largo > 0,
     MaxC > 0,
     Seed > 0,
@@ -42,11 +42,11 @@ cardsSet(Elements, NumE, MaxC, Seed, CS):-
 
 % 2. Largo de una lista
 % 2.1 La consulta también sirve para verificar si una lista es vacía.
-%	len(Lista, Largo) es verdadero si Largo es el número de elementos de una lista.
+% largoLista(Lista, Largo) es verdadero si Largo es el número de elementos de una lista.
 
-len( [], 0 ).
-len( [_|Resto], Largo ) :-
-	len( Resto, LargoAcumulado ),
+largoLista( [], 0 ).
+largoLista( [_|Resto], Largo ) :-
+	largoLista( Resto, LargoAcumulado ),
 	Largo is LargoAcumulado + 1.
 
 %% Consultas:
@@ -60,7 +60,6 @@ agregarCarta([],L2,L2).
 agregarCarta([Cabeza|L1],L2,[Cabeza|L3]):- 
     agregarCarta(L1,L2,L3).
    
-
 % 2.3 Crea un mazo de cartas, recibe la cantidad de elementos que contiene el cardsSet.
 primerCiclo(I,_,I2,[1]):-
     I2 is I+1,!.
@@ -84,8 +83,8 @@ tercerCiclo(X,Y,K,[Cabeza|Cuerpo]):-
     tercerCiclo(X,Y,K2,Cuerpo).
 
 primeraCarta(0,[]):-!.
-primeraCarta(Cabeza,[Cabeza|C]):-
-    NuevaCabeza is Cabeza-1,primeraCarta(NuevaCabeza,C).
+primeraCarta(Cabeza,[Cabeza|Cuerpo]):-
+    NuevaCabeza is Cabeza-1,primeraCarta(NuevaCabeza,Cuerpo).
 
 ordenN(X,NuevoX,[]):-NuevoX is X+1,!.
 ordenN(X,Y,[Cabeza|Cuerpo]):-
@@ -115,6 +114,24 @@ crearMazo(OrdenJuego,Mazo):-
 % [6, 8, 13, 4], [7, 9, 11, 4]]
 
 
+%2.4 nthCard, recibe la un número de carta dentro del mazo.
+nthCard(NumeroCarta, NumeroElemento, Carta):-
+	crearMazo(NumeroElemento, Mazo),
+    encontrarCarta(NumeroCarta, Mazo,Carta).
+
+encontrarCarta(0, [],_).
+encontrarCarta(0,[Salida|_],Carta):-
+    Carta = Salida,!.
+encontrarCarta(NumeroCarta, [_|MazoCuerpo], Carta):-
+    NumeroCarta2 is NumeroCarta-1,
+    encontrarCarta(NumeroCarta2, MazoCuerpo, Carta).
+	
+    
+% Consultas
+% nthCard(0, 3, Carta).
+% Carta = [4, 3, 2, 1]
+    
+
 % ----------------------------------------------------
 % ----------------------------------------------------
 % ----------------------------------------------------
@@ -130,6 +147,7 @@ crearMazo(OrdenJuego,Mazo):-
 % ----------------------------------------------------
 % ----------------------------------------------------
 % ----------------------------------------------------
+
 
 
 
