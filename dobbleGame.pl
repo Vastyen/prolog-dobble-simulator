@@ -268,8 +268,15 @@ findTotalCards(Carta, TotalCards):-
 
 % -------------------- En proceso --------------------
 %%2.6 MissingCards.
-missingCards(CS, MissingCS):-!.
 
+calcularOrden(NumeroElementos, Orden):-
+    Orden is NumeroElementos-1.
+    
+missingCards([PrimeraCarta|_], MissingCS):-
+    largoLista(PrimeraCarta, NumeroElementos),
+    calcularOrden(NumeroElementos, Orden),
+    crearMazo(Orden, MissingCS).
+    
 % -------------------- En proceso --------------------
 % ----------------------------------------------------
 % ----------------------------------------------------
@@ -332,9 +339,3 @@ dobbleGame(NumPlayers, CS, Mode, Seed, G):-
 
 dobbleGameRegister(User, G, GameOut):-
     User,G,GameOut.
-    
-
-
-
-
-
