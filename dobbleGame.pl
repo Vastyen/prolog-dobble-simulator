@@ -141,18 +141,65 @@ findTotalCards(Carta, TotalCards):-
 % findTotalCards([3,5,3,2], TotalCards).
 % TotalCards = 13
 
-% -------- En proceso --------------------------------
-%2.6 MissingCards.
+
+% -------------------- En proceso --------------------
+%%2.6 MissingCards.
 missingCards(NumeroCartas, TotalCards):-
     crearMazo(NumeroCartas, Mazo),
     largoLista(Mazo, LargoMazo),
     TotalCards = LargoMazo.
 
-% -------- En proceso --------------------------------
+% -------------------- En proceso --------------------
+% ----------------------------------------------------
+% ----------------------------------------------------
+% ----------------------------------------------------
 
+
+
+%%2.7 toString. 
+% Convierte un mazo (o lista de cartas) en un string.
+cardToString(Carta,String):-
+    atomics_to_string(Carta, ', ',Coma),
+    string_concat("Carta: ", Coma,String), 
+    write(Coma), write(.), nl.
+
+cardsToString([],""):-!.
+cardsToString([Cabeza|Cola],String):- 
+    cardToString(Cabeza,Cuerpo),
+    cardsToString(Cola,Carta),
+    string_concat(Cuerpo, Carta, String).
+
+toString(Num,String):-
+    crearMazo(Num, Mazo),    
+    cardsToString(Mazo,String).
+
+
+% Operaciones
+% toString(2, String).
+% String = "Carta: 3, 2, 1Carta: 4, 5, 1Carta: 6, 7, 1Carta: 4, 6, 2Carta: 5, 7, 2Carta: 4, 7, 3Carta: 5, 6, 3"
+% 
+% toString(2, String).write(String).
+% String = Carta: 3, 2, 1Carta: 4, 5, 1Carta: 6, 7, 1Carta: 4, 6, 2Carta: 5, 7, 2Carta: 4, 7, 3Carta: 5, 6, 3
+
+% Particularmente en esta ocasión, es posible utilizare un predicado llamado newLine.
+% Obligatoriamente debe estar al interior del predicado, por lo tanto la única forma es 
+% Utilizando el predicado write adentro del predicado que escribe una carta.
+
+% Carta: 3, 2, 1.
+% Carta: 4, 5, 1.
+% Carta: 6, 7, 1.
+% Carta: 4, 6, 2.
+% Carta: 5, 7, 2.
+% Carta: 4, 7, 3.
+% Carta: 5, 6, 3.
+
+
+   
+%2.7 ----------------- En proceso --------------------
 % ----------------------------------------------------
 % ----------------------------------------------------
 % ----------------------------------------------------
+
 
 % --------------------------------
 % Tipo de Dato Abstracto: dobbleGame
@@ -165,6 +212,31 @@ missingCards(NumeroCartas, TotalCards):-
 % ----------------------------------------------------
 % ----------------------------------------------------
 % ----------------------------------------------------
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+% ----------------------------------------------------
+% ----------------------------------------------------
+% ----------------------------------------------------
+%
+% --------------------------------
+% Tipo de Dato Abstracto: Game
+% --------------------------------
+
+% 
 
 
 
