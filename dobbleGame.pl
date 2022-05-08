@@ -18,10 +18,10 @@
  |_   _|   \ /_\    / __|__ _ _ _ __| |__/ __| ___| |_ 
    | | | |) / _ \  | (__/ _` | '_/ _` (_-<__ \/ -_)  _|
    |_| |___/_/ \_\  \___\__,_|_| \__,_/__/___/\___|\__|
-                                                       
-*/
-% Tipo de Dato Abstracto: cardsSet
-% --------------------------------
+                                                       */
+% ----------------------------------------------------
+% Tipo de Dato Abstracto: CardsSet
+% ----------------------------------------------------
 
 % Constructor
 % Predicado que permite generar una baraja de cartas
@@ -266,22 +266,19 @@ findTotalCards(Carta, TotalCards):-
 
 % -------------------- En proceso --------------------
 %%2.6 MissingCards.
-missingCards(NumeroCartas, TotalCards):-
-    crearMazo(NumeroCartas, Mazo),
-    largoLista(Mazo, LargoMazo),
-    TotalCards = LargoMazo.
+missingCards(CS, MissingCS):-!.
 
 % -------------------- En proceso --------------------
 % ----------------------------------------------------
 % ----------------------------------------------------
 % ----------------------------------------------------
 
-%%2.7 toString. 
+% cardsSetToString. 
 % Convierte un mazo (o lista de cartas) en un string.
 cadenaCarta(Carta,String):-
     atomics_to_string(Carta, ', ',Coma),
     string_concat("Carta: ", Coma,String), 
-    write(Coma), write(.), nl.
+    write("Carta: "), write(Coma), write(.), nl.
 
 cadenaCartas([],""):-!.
 cadenaCartas([Cabeza|Cola],String):- 
@@ -289,16 +286,15 @@ cadenaCartas([Cabeza|Cola],String):-
     cadenaCartas(Cola,Carta),
     string_concat(Cuerpo, Carta, String).
 
-toString(Orden,String):-
-    crearMazo(Orden, Mazo),    
-    cadenaCartas(Mazo,String).
+cardsSetToString(CS,String):-   
+    cadenaCartas(CS,String).
 
 
 % Operaciones
-% toString(2, String).
+% cardsSet([1,2,3,4,5,6,7,8],8,57,43435,CS), cardsSetToString(CS,String).
 % String = "Carta: 3, 2, 1Carta: 4, 5, 1Carta: 6, 7, 1Carta: 4, 6, 2Carta: 5, 7, 2Carta: 4, 7, 3Carta: 5, 6, 3"
 % 
-% toString(2, String).write(String).
+% cardsSet([1,2,3,4,5,6,7,8],8,57,43435,CS), cardsSetToString(CS,String), write(String).
 % String = Carta: 3, 2, 1Carta: 4, 5, 1Carta: 6, 7, 1Carta: 4, 6, 2Carta: 5, 7, 2Carta: 4, 7, 3Carta: 5, 6, 3
 
 % Particularmente en esta ocasión, es posible utilizare un predicado llamado newLine.
@@ -313,8 +309,6 @@ toString(Orden,String):-
 % Carta: 4, 7, 3.
 % Carta: 5, 6, 3.
 
-
-
 % ----------------------------------------------------
 % ----------------------------------------------------
 % ----------------------------------------------------
@@ -323,13 +317,21 @@ toString(Orden,String):-
  |_   _|   \ /_\    / __|__ _ _ __  ___ 
    | | | |) / _ \  | (_ / _` | '  \/ -_)
    |_| |___/_/ \_\  \___\__,_|_|_|_\___|
-
-*/				  
-% --------------------------------
+*/
+% ----------------------------------------------------
 % Tipo de Dato Abstracto: Game
-% --------------------------------
+% ----------------------------------------------------
+
+dobbleGame(NumPlayers, CS, Mode, Seed, G):-
+	isDobble(CS),
+    Seed > 0,
+	NumPlayers > 0,
+    G = [[], [], NumPlayers,"En partida.", Mode].
 
 
+dobbleGameRegister(User, G, GameOut):-
+    User,G,GameOut.
+    
 
 
 
