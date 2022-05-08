@@ -21,15 +21,9 @@
    | | | |) / _ \  | (__/ _` | '_/ _` (_-<__ \/ -_)  _|
    |_| |___/_/ \_\  \___\__,_|_| \__,_/__/___/\___|\__|
                                                        */
-<<<<<<< HEAD
 % ----------------------------------------------------
 % Tipo de Dato Abstracto: CardsSet
 % ----------------------------------------------------
-=======
-
-% Tipo de Dato Abstracto: cardsSet
-% --------------------------------
->>>>>>> 496d398c40a0be966bc5b0fd7b25d2a2f6f6e94e
 
 % Constructor
 % Predicado que permite generar una baraja de cartas
@@ -317,10 +311,6 @@ cardsSetToString(CS,String):-
 % Carta: 4, 7, 3.
 % Carta: 5, 6, 3.
 
-<<<<<<< HEAD
-=======
-
->>>>>>> 496d398c40a0be966bc5b0fd7b25d2a2f6f6e94e
 % ----------------------------------------------------
 % ----------------------------------------------------
 % ----------------------------------------------------
@@ -329,21 +319,10 @@ cardsSetToString(CS,String):-
  |_   _|   \ /_\    / __|__ _ _ __  ___ 
    | | | |) / _ \  | (_ / _` | '  \/ -_)
    |_| |___/_/ \_\  \___\__,_|_|_|_\___|
-<<<<<<< HEAD
 */
 % ----------------------------------------------------
-=======
-                                          */
-% --------------------------------
->>>>>>> 496d398c40a0be966bc5b0fd7b25d2a2f6f6e94e
 % Tipo de Dato Abstracto: Game
 % ----------------------------------------------------
-
-dobbleGame(NumPlayers, CS, Mode, Seed, G):-
-	isDobble(CS),
-    Seed > 0,
-	NumPlayers > 0,
-    G = [[], [], NumPlayers,"En partida.", Mode].
 
 dobbleGame(NumPlayers, CS, Mode, Seed, G):-
 	isDobble(CS),
@@ -355,8 +334,6 @@ dobbleGameRegister(User, G, GameOut):-
     User,G,GameOut.
     
 
-dobbleGameRegister(User, G, GameOut):-
-    
 
 
 
