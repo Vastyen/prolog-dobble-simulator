@@ -187,6 +187,11 @@ crearMazo(OrdenJuego,Mazo):-
 
 
 %2.4 nthCard, recibe y retorna un número de carta dentro del mazo.
+
+nthElement(Posicion, Lista, Elemento):-
+    encontrarCarta(Posicion, Lista,Elemento).
+
+
 nthCard(NumeroCarta, CS, Carta):-
     encontrarCarta(NumeroCarta, CS,Carta).
 
@@ -232,8 +237,8 @@ missingCards([PrimeraCarta|_], MissingCS):-
 % Convierte un mazo (o lista de cartas) en un string.
 cadenaCarta(Carta,String):-
     atomics_to_string(Carta, ', ',Coma),
-    string_concat("Carta: ", Coma,String), 
-    write("Carta: "), write(Coma), write(.), nl.
+    string_concat("Carta: ", Coma,Wr),
+	string_concat(Wr, "\n", String).
 
 cadenaCartas([],""):-!.
 cadenaCartas([Cabeza|Cola],String):- 
@@ -281,7 +286,7 @@ dobbleGame(NumPlayers, CS, Mode, Seed, G):-
 	isDobble(CS),
     Seed > 0,
 	NumPlayers > 0,
-    G = [[], [], [], [], NumPlayers,"Partida en curso.", Mode].
+    G = [["Area: "], ["Piezas Disponibles: "], 0, ["PlayersScore: "], ["Players: "], NumPlayers,"Partida en curso.", Mode].
 
 % ----------------------------------------------------
 % Métodos Selectores: Game
@@ -295,12 +300,13 @@ getAreaDeJuego([Area|_], Area).
 
 % CS = [3, 2, 1], [4, 5, 1], [6, 7, 1], [4, 6, 2], [5, 7, 2], [4, 7, 3], [5, 6, 3]]
 % Mode = StackMode
-% G = [[], [], 3, "Partida en curso.", StackMode]
+% G = [["Area: "], ["Piezas Disponibles: "], 0, ["PlayersScore: "], ["Players: "], 3, "Partida en curso.", StackMode]
+
 % Area = []
 
 
 getPiezasDisponibles(G, PiezasDisponibles):-
-    nthCard(1, G, PiezasDisponibles).
+    nthElement(1, G, PiezasDisponibles).
 
 % Operaciones
 % cardsSet([1,2,3],3,7,43435,CS), 
@@ -308,13 +314,14 @@ getPiezasDisponibles(G, PiezasDisponibles):-
 
 % CS = [3, 2, 1], [4, 5, 1], [6, 7, 1], [4, 6, 2], [5, 7, 2], [4, 7, 3], [5, 6, 3]]
 % Mode = StackMode
-% G = [[], [], 3, "Partida en curso.", StackMode]
+% G = [["Area: "], ["Piezas Disponibles: "], 0, ["PlayersScore: "], ["Players: "], 3, "Partida en curso.", StackMode]
+
 % PiezasDisponibles = []
 
 
 
 getTurns(G, Turns):-
-    nthCard(2, G, Turns).
+    nthElement(2, G, Turns).
 
 % Operaciones
 % cardsSet([1,2,3],3,7,43435,CS), 
@@ -322,13 +329,16 @@ getTurns(G, Turns):-
 
 % CS = [3, 2, 1], [4, 5, 1], [6, 7, 1], [4, 6, 2], [5, 7, 2], [4, 7, 3], [5, 6, 3]]
 % Mode = StackMode
-% G = [[], [], 3, "Partida en curso.", StackMode]
+% G = [["Area: "], ["Piezas Disponibles: "], 0, ["PlayersScore: "], ["Players: "], 3, "Partida en curso.", StackMode]
+
 % Turns = []
 
+getPlayersScore(G, PlayersScore):-
+    nthElement(3, G, PlayersScore).
 
 
 getPlayers(G, Players):-
-    nthCard(3, G, Players).
+    nthElement(4, G, Players).
 
 % Operaciones
 % cardsSet([1,2,3],3,7,43435,CS), 
@@ -336,11 +346,12 @@ getPlayers(G, Players):-
 
 % CS = [3, 2, 1], [4, 5, 1], [6, 7, 1], [4, 6, 2], [5, 7, 2], [4, 7, 3], [5, 6, 3]]
 % Mode = StackMode
-% G = [[], [], 3, "Partida en curso.", StackMode]
+% G = [["Area: "], ["Piezas Disponibles: "], 0, ["PlayersScore: "], ["Players: "], 3, "Partida en curso.", StackMode]
+
 % Players = []
 
 getNumPlayers(G, NumPlayers):-
-    nthCard(4, G, NumPlayers).
+    nthElement(5, G, NumPlayers).
 
 % Operaciones
 % cardsSet([1,2,3],3,7,43435,CS), 
@@ -348,12 +359,13 @@ getNumPlayers(G, NumPlayers):-
 
 % CS = [3, 2, 1], [4, 5, 1], [6, 7, 1], [4, 6, 2], [5, 7, 2], [4, 7, 3], [5, 6, 3]]
 % Mode = StackMode
-% G = [[], [], 3, "Partida en curso.", StackMode]
+% G = [["Area: "], ["Piezas Disponibles: "], 0, ["PlayersScore: "], ["Players: "], 3, "Partida en curso.", StackMode]
+
 % NumPlayers = 3
 
 
 getStatus(G, Status):-
-    nthCard(5, G, Status).
+    nthElement(6, G, Status).
 
 % Operaciones
 % cardsSet([1,2,3],3,7,43435,CS), 
@@ -361,12 +373,13 @@ getStatus(G, Status):-
 
 % CS = [3, 2, 1], [4, 5, 1], [6, 7, 1], [4, 6, 2], [5, 7, 2], [4, 7, 3], [5, 6, 3]]
 % Mode = StackMode
-% G = [[], [], 3, "Partida en curso.", StackMode]
+% G = [["Area: "], ["Piezas Disponibles: "], 0, ["PlayersScore: "], ["Players: "], 3, "Partida en curso.", StackMode]
+
 % Status = "Partida en curso."
 
 
 getMode(G, Mode):-
-    nthCard(6, G, Mode).
+    nthElement(7, G, Mode).
   
 % Operaciones
 % cardsSet([1,2,3],3,7,43435,CS), 
@@ -374,7 +387,7 @@ getMode(G, Mode):-
 
 % CS = [3, 2, 1], [4, 5, 1], [6, 7, 1], [4, 6, 2], [5, 7, 2], [4, 7, 3], [5, 6, 3]]
 % Mode = StackMode
-% G = [[], [], 3, "Partida en curso.", StackMode]
+% G = [["Area: "], ["Piezas Disponibles: "], 0, ["PlayersScore: "], ["Players: "], 3, "Partida en curso.", StackMode]
 % Mode = StackMode
 
 
@@ -382,23 +395,172 @@ dobbleGameRegister(User, G, GameOut):-
     getAreaDeJuego(G, Area),
     getPiezasDisponibles(G, PiezasDisponibles),
     getTurns(G, Turns),
+    getPlayersScore(G, PlayersScore),
     getPlayers(G, Players),
     getNumPlayers(G, NumPlayers),
     getStatus(G, Status),
     getMode(G, Mode),
+    not(member(User, Players)),
+    NumPlayers > 0,
     append(Players, [User], NewPlayers),
-    NewNumPlayers is NumPlayers+1,
-    GameOut = [Area, PiezasDisponibles,Turns,NewPlayers,NewNumPlayers,Status,Mode].
+    NewNumPlayers is NumPlayers-1,
+    GameOut = [Area, PiezasDisponibles,Turns,PlayersScore,NewPlayers,NewNumPlayers,Status,Mode].
 
 % Operaciones
 % cardsSet([1,2,3],3,7,43435,CS),
 % dobbleGame(3,CS, StackMode, 1000, G), 
-% dobbleGameRegister("Basti",G,GameOut).
+% dobbleGameRegister("Gonzalo",G,GameOut).
+
+% CS = [[3, 2, 1], [4, 5, 1], [6, 7, 1], [4, 6, 2], [5, 7, 2], [4, 7, 3], [5, 6, 3]]
+% Mode = StackMode 
+% G = [["Area: "], ["Piezas Disponibles: "], 0, ["PlayersScore: "], ["Players: "], 3, "Partida en curso.", StackMode]
+% GameOut = [["Piezas Disponibles: "], 2|_890], [_900, "Piezas Disponibles: "], 1, ["PlayersScore: "], ["Players: ", "Gonzalo"], 2, "Partida en curso.", StackMode]
 
 
+dobbleGameWhoseTurnIsIt(G, User):-
+    getTurns(G, TurnoNumero),
+    getPlayers(G, Players),
+    nthElement(TurnoNumero, Players, User).
+
+% Operaciones
+% cardsSet([1,2,3],3,7,43435,CS), 
+% dobbleGame(3,CS, StackMode, 1000, G), 
+% dobbleGameRegister("Gonzalo", G, GameOut), 
+% dobbleGameWhoseTurnIsIt(GameOut, User).
+
+% CS = [[3, 2, 1], [4, 5, 1], [6, 7, 1], [4, 6, 2], [5, 7, 2], [4, 7, 3], [5, 6, 3]]
+% Mode = StackMode 
+% G = [[], [], 0, [], 3, "Partida en curso.", StackMode]
+% GameOut = [["Piezas Disponibles: "], 2|_890], [_900, "Piezas Disponibles: "], 1, ["PlayersScore: "], ["Players: ", "Gonzalo"], 2, "Partida en curso.", StackMode]
+% User = "Gonzalo"
 
 
+dobbleGamePlay(G,Action,GameOut):-
+    Action == null,
+    getAreaDeJuego(G, Area),
+    getPiezasDisponibles(G, PiezasDisponibles),
+    getPlayersScore(G, PlayersScore),
+    getPlayers(G, Players),
+    getTurns(G, Turns),
+    getNumPlayers(G, NumPlayers),
+    getStatus(G, Status),
+    getMode(G, Mode),
+    getPlayersScore(G, PlayersScore),
+    GameOut = [Area, PiezasDisponibles, Turns,PlayersScore,Players, NumPlayers,Status,Mode].
+
+% Operaciones
+% cardsSet([1,2,3],3,7,43435,CS), dobbleGame(3,CS, StackMode, 1000, G), dobbleGamePlay(G,null,GameOut).
+% CS = [3, 2, 1], [4, 5, 1], [6, 7, 1], [4, 6, 2], [5, 7, 2], [4, 7, 3], [5, 6, 3]]
+% Mode = StackMode
+% G = [["Area: "], ["Piezas Disponibles: "], 0, ["PlayersScore: "], ["Players: "], 3, "Partida en curso.", StackMode]
+% GameOut = [["Piezas Disponibles: "], 2|_890], [_900, "Piezas Disponibles: "], 1, ["PlayersScore: "], ["Players: ", "Gonzalo"], 2, "Partida en curso.", StackMode]
 
 
+dobbleGamePlay(G,[Action|_],GameOut):-
+    Action == pass,
+    getTurns(G, Turn),
+    NewTurns is Turn+1,
+    getAreaDeJuego(G, Area),
+    getPiezasDisponibles(G, PiezasDisponibles),
+    getPlayersScore(G, PlayersScore),
+    getPlayers(G, Players),
+    getNumPlayers(G, NumPlayers),
+    getStatus(G, Status),
+    getMode(G, Mode),
+    getPlayersScore(G, PlayersScore),
+    GameOut = [Area, PiezasDisponibles,NewTurns,PlayersScore,Players,NumPlayers,Status,Mode].
 
+% Operaciones
+% cardsSet([1,2,3],3,7,43435,CS), dobbleGame(3,CS, StackMode, 1000, G), dobbleGamePlay(G,[pass],GameOut).
+% CS = [[3, 2, 1], [4, 5, 1], [6, 7, 1], [4, 6, 2], [5, 7, 2], [4, 7, 3], [5, 6, 3]]
+% Mode = StackMode
+% G = [["Area: "], ["Piezas Disponibles: "], 0, ["PlayersScore: "], ["Players: "], 3, "Partida en curso.", StackMode]
+
+dobbleGamePlay(G,[Action|_],GameOut):-
+    Action == finish,
+    getAreaDeJuego(G, Area),
+    getPiezasDisponibles(G, PiezasDisponibles),
+    getTurns(G, Turns),
+    getPlayersScore(G, PlayersScore),
+    getPlayers(G, Players),
+    getNumPlayers(G, NumPlayers),
+    getMode(G, Mode),
+    getPlayersScore(G, PlayersScore),
+    GameOut = [Area, PiezasDisponibles,Turns,PlayersScore,Players, NumPlayers,"Juego terminado.",Mode].
+
+% Operaciones
+% cardsSet([1,2,3],3,7,43435,CS), dobbleGame(3,CS, StackMode, 1000, G), dobbleGamePlay(G,[finish],GameOut).
+% CS = [3, 2, 1], [4, 5, 1], [6, 7, 1], [4, 6, 2], [5, 7, 2], [4, 7, 3], [5, 6, 3]]
+% Mode = StackMode
+% G = [["Area: "], ["Piezas Disponibles: "], 0, ["PlayersScore: "], ["Players: "], 3, "Partida en curso.", StackMode]
+% GameOut = [["Piezas Disponibles: "], 2|_890], [_900, "Piezas Disponibles: "], 1, ["PlayersScore: "], ["Players: ", "Gonzalo"], 2, "Partida en curso.", StackMode]
+
+dobbleGamePlay(G, Action, GameOut):-
+    largoLista(Action, LargoAction),
+    LargoAction == 3,
+    nthCard(2, Action, Elemento),
+    getPiezasDisponibles(G, PiezasDisponibles),
+    PrimeraCarta = [PiezasDisponibles|_],
+    RestoCartas = [_|PiezasDisponibles],
+    member(Elemento, PrimeraCarta),
+    getPlayersScore(G, PlayersScore),
+    getTurns(G, TurnoNumero),
+    getPlayers(G, Players),
+    getNumPlayers(G, NumPlayers),
+    getStatus(G, Status),
+    getMode(G, Mode),
+    TurnoNumeroAux is TurnoNumero+1,
+
+    GameOut = [PrimeraCarta, RestoCartas, TurnoNumeroAux,PlayersScore,Players,NumPlayers, Status, Mode].
+	
+% Operaciones
+% cardsSet([1,2,3],3,7,43435,CS), dobbleGame(3,CS, StackMode, 1000, G), 
+% dobbleGameRegister("Gonzalo", G, GameOut), 
+% dobbleGamePlay(GameOut,[spotIt, "Dobble", 2],GameOut2).
+% CS = [[3, 2, 1], [4, 5, 1], [6, 7, 1], [4, 6, 2], [5, 7, 2], [4, 7, 3], [5, 6, 3]]
+% Mode = StackMode
+% G = [["Area: "], ["Piezas Disponibles: "], 0, ["PlayersScore: "], ["Players: "], 3, "Partida en curso.", StackMode]
+% GameOut2 = [["Piezas Disponibles: "], 2|_890], [_900, "Piezas Disponibles: "], 1, ["PlayersScore: "], ["Players: ", "Gonzalo"], 2, "Partida en curso.", StackMode]
+
+
+dobbleGameStatus(G, GameStatus):-
+    getStatus(G, Status),
+    GameStatus = Status.
+
+% Operaciones
+% cardsSet([1,2,3],3,7,43435,CS), dobbleGame(3,CS, StackMode, 1000, G), 
+% dobbleGameRegister("Gonzalo",G,GameOut), dobbleGameStatus(GameOut, Status).
+% Status = "Partida en curso."
+	
+dobbleGameScore(G, User, Score):-
+    getPlayers(G, Players),
+    getPlayersScore(G,PlayersScore),
+    nth0(Pos, Players, User),
+    nthElement(Pos, PlayersScore, Finding),
+    Score = Finding.
     
+dobbleGameToString(G, String):-
+    getTurns(G, Turns),
+    getNumPlayers(G, NumPlayers),
+    getStatus(G, Status),
+
+	string_concat("Turno: \n", Turns, Aux1),
+    string_concat("Numero de Jugadores: \n", NumPlayers, Aux2),
+    string_concat("Estado del Juego: \n", Status, Aux3),
+
+    string_concat(Aux1, Aux2, Aux10),
+    string_concat(Aux10, Aux3, String).
+
+% Operaciones
+% cardsSet([1,2,3],3,7,43435,CS), dobbleGame(3,CS, StackMode, 1000, G), 
+% dobbleGameRegister("Gonzalo", G, GameOut), 
+% dobbleGamePlay(GameOut,[spotIt, "Dobble", 2],GameOut2), 
+% dobbleGameToString(GameOut2, String).
+
+% CS = [[3, 2, 1], [4, 5, 1], [6, 7, 1], [4, 6, 2], [5, 7, 2], [4, 7, 3], [5, 6, 3]]
+% Mode = StackMode 
+% G = [["Area: "], ["Piezas Disponibles: "], 0, ["PlayersScore: "], ["Players: "], 3, "Partida en curso.", StackMode]
+% GameOut = [["Area: "], ["Piezas Disponibles: "], 0, ["PlayersScore: "], ["Players: ", "Gonzalo"], 2, "Partida en curso.", StackMode]
+% GameOut2 = [["Piezas Disponibles: "], 2|_890], [_900, "Piezas Disponibles: "], 1, ["PlayersScore: "], ["Players: ", "Gonzalo"], 2, "Partida en curso.", StackMode]
+% String = "Turno: \n1Numero de Jugadores: \n2Estado del Juego: \nPartida en curso."
+
