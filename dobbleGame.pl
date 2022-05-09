@@ -21,7 +21,7 @@
    |_| |___/_/ \_\  \___\__,_|_| \__,_/__/___/\___|\__|
                                                        */
 % ----------------------------------------------------
-% 			Tipo de Dato Abstracto: CardsSet
+% Tipo de Dato Abstracto: CardsSet
 % ----------------------------------------------------
 
 
@@ -64,7 +64,7 @@
 
 
 % ----------------------------------------------------
-% 				 Método Constructor
+% Método Constructor
 % ----------------------------------------------------
 
 % Descripción: Constructor cardsSet, crea un mazo de cartas y lo guarda en CS.
@@ -91,7 +91,7 @@ cardsSet(Elements, NumE, MaxC, Seed, CS):-
 
 
 % ----------------------------------------------------
-% 				   Métodos cardsSet
+% Métodos cardsSet
 % ----------------------------------------------------
 
 
@@ -291,7 +291,7 @@ cardsSetToString(CS,String):-
            |_| |___/_/ \_\  \___\__,_|_|_|_\___|
         */
 % ----------------------------------------------------
-% 		     Tipo de Dato Abstracto: Game
+% Tipo de Dato Abstracto: Game
 % ----------------------------------------------------
 
 % Lista de Predicados
@@ -325,7 +325,7 @@ cardsSetToString(CS,String):-
 
 
 % ----------------------------------------------------
-% 				Método Constructor: Game
+% Método Constructor: Game
 % ----------------------------------------------------
 
 % Descripción: Predicado que genera un juego.
@@ -338,7 +338,7 @@ dobbleGame(NumPlayers, CS, Mode, Seed, G):-
     G = [["Area: "], ["Piezas Disponibles: "], 0, ["PlayersScore: "], ["Players: "], NumPlayers,"Partida en curso.", Mode].
 
 % ----------------------------------------------------
-% 				Métodos Selectores: Game
+% Métodos Selectores: Game
 % ----------------------------------------------------
 
 % Descripción: Predicado selector que obtiene el área de un juego
@@ -384,7 +384,7 @@ getMode(G, Mode):-
   
 
 % ----------------------------------------------------
-% 					Métodos dobbleGame
+% Métodos dobbleGame
 % ----------------------------------------------------
 
 % Descripción: Predicado que genera un nuevo juego.
@@ -533,7 +533,7 @@ dobbleGameToString(G, String):-
               |__/          |_|            
 */
 % ----------------------------------------------------
-% 					   Ejemplos
+% Ejemplos
 % ----------------------------------------------------
 % ----------------------------------------------------
 % Ejemplos cardsSet
@@ -917,3 +917,11 @@ false
 
 % ----------------------------------------------------
 % ----------------------------------------------------
+
+
+
+
+
+
+
+
