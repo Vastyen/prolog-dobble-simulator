@@ -13,8 +13,7 @@
 % ----------------------------------------------------
 % ----------------------------------------------------
 % ----------------------------------------------------
-%
-% --------------------------------
+
 /*
   _____ ___   _      ___             _    ___      _   
  |_   _|   \ /_\    / __|__ _ _ _ __| |__/ __| ___| |_ 
@@ -22,21 +21,34 @@
    |_| |___/_/ \_\  \___\__,_|_| \__,_/__/___/\___|\__|
                                                        */
 % ----------------------------------------------------
-% Tipo de Dato Abstracto: CardsSet
+% 			Tipo de Dato Abstracto: CardsSet
 % ----------------------------------------------------
 
-% Constructor
-% Predicado que permite generar una baraja de cartas
-% Dominio
-% elements: list
-% numE: integer
-% maxC: integer
-% seed: integer
-% CS: cards
 
-% Predicados
-% cardsSet(Elements, NumE, MaxC, Seed, CS)
+% Lista de Predicados
 
+% cardsSet(Elements, NumE, MaxC, Seed, CS).
+% recorrerCarta(Carta).
+% cardsSetIsDobble(CS).
+% isPrime(Numero).
+% maxCards(CS, MaxC, Result).
+% largoLista(Lista, Largo).
+% agregarCarta(Lista1, Lista2, ListaResultado).
+% primeraCarta(OrdenPrimeraCarta,CartaA).
+% primerCiclo(I,J,NuevoK,Cuerpo).
+% segundoCiclo(Q,I,J,K2,Cuerpo).
+% tercerCiclo(X,Y,K2,Cuerpo).
+% ordenN(OrdenJuego,1,CartaB).
+% ordenNN(OrdenJuego,1,CartaC).
+% agregarCarta([CartaA|CartaB],CartaC,Mazo).
+% nthElement(Posicion, Lista, Elemento).
+% cardsSetNthCard(NumeroCarta, CS, Carta).
+% encontrarCarta(NumeroCarta, MazoCuerpo, Carta).
+% cardsSetFindTotalCards(Carta, TotalCards).
+% calcularOrden(NumeroElementos, Orden).
+% cadenaCarta(Carta, String).
+% cadenaCartas(ListaCartas, String).
+% cardsSetToString(CS, String).
 
 % ----------------------------------------------------
 %% Metas
@@ -50,6 +62,14 @@
 % Generar un número aleatoreo para asignar aleatoriadad a la generación del mazo
 % ----------------------------------------------------
 
+
+% ----------------------------------------------------
+% 				 Método Constructor
+% ----------------------------------------------------
+
+% Descripción: Constructor cardsSet, crea un mazo de cartas y lo guarda en CS.
+% Dominio: Elemento (list) X NumE (integer) X MaxC (integer) 
+% Seed (integer) X CS (list).
 cardsSet(Elements, NumE, MaxC, Seed, CS):-
     largoLista(Elements, LargoElementos),
     Orden is LargoElementos-1,
@@ -62,14 +82,16 @@ cardsSet(Elements, NumE, MaxC, Seed, CS):-
     crearMazo(Orden, TempCS),
     maxCards(TempCS, MaxC, CS).
 
-% Operaciones
+% Ejemplos cardsSet
 % cardsSet([1,2,3],3,7,43435,CS).
 % CS = [[3, 2, 1], [4, 5, 1], [6, 7, 1], [4, 6, 2], [5, 7, 2], [4, 7, 3], [5, 6, 3]]
 
 % cardsSet([1,2,3,4,5],18,57,43435,CS).
 % false
 
+
 % ----------------------------------------------------
+% 				   Métodos cardsSet
 % ----------------------------------------------------
 
 
@@ -109,9 +131,9 @@ cardsSetIsDobble([Cabeza|Cola]):-
 
 % Descripcion: Verifica si un numero ingresado es primo o no.
 % Dominio: Numero.
-isPrime(Number):-
-    not((OtherNumber is Number-1,between(2,OtherNumber,N), 0 is mod(Number,N))),
-    not(Number is 1).
+isPrime(Numero):-
+    not((NumeroNuevo is Numero-1,between(2,NuevoNumero,N), 0 is mod(Numero,N))),
+    not(Numero is 1).
 
 % Operaciones
 % isPrime(3)
@@ -313,15 +335,52 @@ cardsSetToString(CS,String):-
 % ----------------------------------------------------
 % ----------------------------------------------------
 /*
-  _____ ___   _      ___                
- |_   _|   \ /_\    / __|__ _ _ __  ___ 
-   | | | |) / _ \  | (_ / _` | '  \/ -_)
-   |_| |___/_/ \_\  \___\__,_|_|_|_\___|
-*/
+          _____ ___   _      ___                
+         |_   _|   \ /_\    / __|__ _ _ __  ___ 
+           | | | |) / _ \  | (_ / _` | '  \/ -_)
+           |_| |___/_/ \_\  \___\__,_|_|_|_\___|
+        */
 % ----------------------------------------------------
-% Tipo de Dato Abstracto: | Game |
+% 		     Tipo de Dato Abstracto: Game
 % ----------------------------------------------------
 
+% Lista de Predicados
+
+% dobbleGame(NumPlayers, CS, Mode, Seed, G).
+% getAreaDeJuego(G, Area).
+% getPiezasDisponibles(G, PiezasDisponibles).
+% getTurns(G, Turns).
+% getPlayersScore(G, PlayersScore).
+% getPlayers(G, Players).
+% getNumPlayers(G, NumPlayers).
+% getStatus(G, Status).
+% getMode(G, Mode).
+% dobbleGameRegister(User, G, GameOut).
+% dobbleGameWhoseTurnIsIt(G, User).
+% dobbleGamePlay(G,Action,GameOut).
+% dobbleGamePlay(G, Lista, GameOut).
+% dobbleGameStatus(G, GameStatus).
+% dobbleGameScore(G, User, Score).
+% dobbleGameToString(G, String).
+
+% ----------------------------------------------------
+%% Metas
+
+% Primeras: Generar un juego y todas sus acciones.
+% ----------------------------------------------------
+% Secundarias: Generar métodos selectores para entregar nuevas listas
+% del mismo TDA (dobbleGame) con lo respectivamente solicitado para cada
+% predicado. 
+% ----------------------------------------------------
+
+
+% ----------------------------------------------------
+% 				Método Constructor: Game
+% ----------------------------------------------------
+
+% Descripción: Predicado que genera un juego.
+% Dominio: NumPlayers (int) X CS (cardsSet) X Mode (String) 
+% Seed (int) X G (list).
 dobbleGame(NumPlayers, CS, Mode, Seed, G):-
 	isDobble(CS),
     Seed > 0,
@@ -329,9 +388,11 @@ dobbleGame(NumPlayers, CS, Mode, Seed, G):-
     G = [["Area: "], ["Piezas Disponibles: "], 0, ["PlayersScore: "], ["Players: "], NumPlayers,"Partida en curso.", Mode].
 
 % ----------------------------------------------------
-% Métodos Selectores: Game
+% 				Métodos Selectores: Game
 % ----------------------------------------------------
 
+% Descripción: Predicado selector que obtiene el área de un juego
+% Dominio: Game (dobbleGame) X Area (list).
 getAreaDeJuego([Area|_], Area).
 
 % Operaciones
@@ -345,6 +406,8 @@ getAreaDeJuego([Area|_], Area).
 % Area = []
 
 
+% Descripción: Predicado selector que obtiene las piezas disponibles de un juego
+% Dominio: Game (dobbleGame) X PiezasDisponibles (list).
 getPiezasDisponibles(G, PiezasDisponibles):-
     nthElement(1, G, PiezasDisponibles).
 
@@ -359,6 +422,8 @@ getPiezasDisponibles(G, PiezasDisponibles):-
 % PiezasDisponibles = []
 
 
+% Descripción: Predicado selector que obtiene los turnos de un juego
+% Dominio: Game (dobbleGame) X Turns (int).
 getTurns(G, Turns):-
     nthElement(2, G, Turns).
 
@@ -372,10 +437,16 @@ getTurns(G, Turns):-
 
 % Turns = []
 
+
+% Descripción: Predicado selector que obtiene la lista de puntajes.
+% Dominio: Game (dobbleGame) X PlayersScore (list).
 getPlayersScore(G, PlayersScore):-
     nthElement(3, G, PlayersScore).
 
 
+
+% Descripción: Predicado selector que obtiene la lista de jugadores
+% Dominio: Game (dobbleGame) X Players (list).
 getPlayers(G, Players):-
     nthElement(4, G, Players).
 
@@ -389,6 +460,9 @@ getPlayers(G, Players):-
 
 % Players = []
 
+
+% Descripción: Predicado selector que obtiene el número de jugadores
+% Dominio: Game (dobbleGame) X NumPlayers (int).
 getNumPlayers(G, NumPlayers):-
     nthElement(5, G, NumPlayers).
 
@@ -403,6 +477,8 @@ getNumPlayers(G, NumPlayers):-
 % NumPlayers = 3
 
 
+% Descripción: Predicado selector que obtiene el estado de un juego
+% Dominio: Game (dobbleGame) X Status (string).
 getStatus(G, Status):-
     nthElement(6, G, Status).
 
@@ -417,6 +493,9 @@ getStatus(G, Status):-
 % Status = "Partida en curso."
 
 
+
+% Descripción: Predicado selector que obtiene el modo de juego de un juego.
+% Dominio: Game (dobbleGame) X Mode (string).
 getMode(G, Mode):-
     nthElement(7, G, Mode).
   
@@ -429,7 +508,12 @@ getMode(G, Mode):-
 % G = [["Area: "], ["Piezas Disponibles: "], 0, ["PlayersScore: "], ["Players: "], 3, "Partida en curso.", StackMode]
 % Mode = StackMode
 
+% ----------------------------------------------------
+% 					Métodos dobbleGame
+% ----------------------------------------------------
 
+% Descripción: Predicado que genera un nuevo juego.
+% Dominio: User (string) X Game (dobbleGame) X GameOut (dobbleGame).
 dobbleGameRegister(User, G, GameOut):-
     getAreaDeJuego(G, Area),
     getPiezasDisponibles(G, PiezasDisponibles),
@@ -456,6 +540,8 @@ dobbleGameRegister(User, G, GameOut):-
 % GameOut = [["Piezas Disponibles: "], 2|_890], [_900, "Piezas Disponibles: "], 1, ["PlayersScore: "], ["Players: ", "Gonzalo"], 2, "Partida en curso.", StackMode]
 
 
+% Descripción: Predicado que devuelve el turno respectivo de un juego.
+% Dominio: Game (dobbleGame) X User (string).
 dobbleGameWhoseTurnIsIt(G, User):-
     getTurns(G, TurnoNumero),
     getPlayers(G, Players),
@@ -474,6 +560,9 @@ dobbleGameWhoseTurnIsIt(G, User):-
 % User = "Gonzalo"
 
 
+
+% Descripción: Predicado que realiza una jugada a partir de un juego.
+% Dominio: Game (dobbleGame) X Action (atom) X GameOut (dobbleGame).
 dobbleGamePlay(G,Action,GameOut):-
     Action == null,
     getAreaDeJuego(G, Area),
@@ -495,6 +584,8 @@ dobbleGamePlay(G,Action,GameOut):-
 % GameOut = [["Piezas Disponibles: "], 2|_890], [_900, "Piezas Disponibles: "], 1, ["PlayersScore: "], ["Players: ", "Gonzalo"], 2, "Partida en curso.", StackMode]
 
 
+% Descripción: Predicado que realiza una jugada a partir de un juego.
+% Dominio: Game (dobbleGame) X Action (list) X GameOut (dobbleGame).
 dobbleGamePlay(G,[Action|_],GameOut):-
     Action == pass,
     getTurns(G, Turn),
@@ -515,6 +606,9 @@ dobbleGamePlay(G,[Action|_],GameOut):-
 % Mode = StackMode
 % G = [["Area: "], ["Piezas Disponibles: "], 0, ["PlayersScore: "], ["Players: "], 3, "Partida en curso.", StackMode]
 
+
+% Descripción: Predicado que realiza una jugada a partir de un juego.
+% Dominio: Game (dobbleGame) X Action (list) X GameOut (dobbleGame).
 dobbleGamePlay(G,[Action|_],GameOut):-
     Action == finish,
     getAreaDeJuego(G, Area),
@@ -534,6 +628,9 @@ dobbleGamePlay(G,[Action|_],GameOut):-
 % G = [["Area: "], ["Piezas Disponibles: "], 0, ["PlayersScore: "], ["Players: "], 3, "Partida en curso.", StackMode]
 % GameOut = [["Piezas Disponibles: "], 2|_890], [_900, "Piezas Disponibles: "], 1, ["PlayersScore: "], ["Players: ", "Gonzalo"], 2, "Partida en curso.", StackMode]
 
+
+% Descripción: Predicado que realiza una jugada a partir de un juego.
+% Dominio: Game (dobbleGame) X Action (list) X GameOut (dobbleGame).
 dobbleGamePlay(G, Action, GameOut):-
     largoLista(Action, LargoAction),
     LargoAction == 3,
@@ -562,6 +659,8 @@ dobbleGamePlay(G, Action, GameOut):-
 % GameOut2 = [["Piezas Disponibles: "], 2|_890], [_900, "Piezas Disponibles: "], 1, ["PlayersScore: "], ["Players: ", "Gonzalo"], 2, "Partida en curso.", StackMode]
 
 
+% Descripción: Predicado que obtiene el estado de un juego.
+% Dominio: Game (dobbleGame) X GameStatus (string).
 dobbleGameStatus(G, GameStatus):-
     getStatus(G, Status),
     GameStatus = Status.
@@ -575,6 +674,9 @@ dobbleGameStatus(G, GameStatus):-
 % GameOut = [["Piezas Disponibles: "], 2|_890], [_900, "Piezas Disponibles: "], 1, ["PlayersScore: "], ["Players: ", "Gonzalo"], 2, "Partida en curso.", StackMode]
 % Status = "Partida en curso."
 	
+
+% Descripción: Predicado que obtiene el puntaje de un jugador
+% Dominio: Game (dobbleGame) X User (string) X Score (int).
 dobbleGameScore(G, User, Score):-
     getPlayers(G, Players),
     getPlayersScore(G,PlayersScore),
@@ -591,7 +693,9 @@ dobbleGameScore(G, User, Score):-
 % GameOut = [["Piezas Disponibles: "], 2|_890], [_900, "Piezas Disponibles: "], 1, ["PlayersScore: "], ["Players: ", "Gonzalo"], 2, "Partida en curso.", StackMode]
 % Score = Score
 
-    
+
+% Descripción: Predicado que genera un string a partir de de un juego.
+% Dominio: Game (dobbleGame) X String (string).
 dobbleGameToString(G, String):-
     getTurns(G, Turns),
     getNumPlayers(G, NumPlayers),
