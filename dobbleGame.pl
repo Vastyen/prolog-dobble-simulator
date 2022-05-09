@@ -239,10 +239,9 @@ crearMazo(OrdenJuego,Mazo):-
 % [6, 8, 13, 4], [7, 9, 11, 4]]
 
 
-%2.4 nthCard, recibe la un número de carta dentro del mazo.
-nthCard(NumeroCarta, NumeroElemento, Carta):-
-	crearMazo(NumeroElemento, Mazo),
-    encontrarCarta(NumeroCarta, Mazo,Carta).
+%2.4 nthCard, recibe y retorna un número de carta dentro del mazo.
+nthCard(NumeroCarta, CS, Carta):-
+    encontrarCarta(NumeroCarta, CS,Carta).
 
 encontrarCarta(0, [],_).
 encontrarCarta(0,[Salida|_],Carta):-
@@ -328,14 +327,123 @@ cardsSetToString(CS,String):-
    |_| |___/_/ \_\  \___\__,_|_|_|_\___|
 */
 % ----------------------------------------------------
-% Tipo de Dato Abstracto: Game
+% Tipo de Dato Abstracto: | Game |
 % ----------------------------------------------------
 
 dobbleGame(NumPlayers, CS, Mode, Seed, G):-
 	isDobble(CS),
     Seed > 0,
 	NumPlayers > 0,
-    G = [[], [], NumPlayers,"En partida.", Mode].
+    G = [[], [], [], [], NumPlayers,"Partida en curso.", Mode].
+
+% ----------------------------------------------------
+% Métodos Selectores: Game
+% ----------------------------------------------------
+
+getAreaDeJuego([Area|_], Area).
+
+% Operaciones
+% cardsSet([1,2,3],3,7,43435,CS), 
+% dobbleGame(3,CS, StackMode, 1000, G), getAreaDeJuego(G, Area).
+
+% CS = [3, 2, 1], [4, 5, 1], [6, 7, 1], [4, 6, 2], [5, 7, 2], [4, 7, 3], [5, 6, 3]]
+% Mode = StackMode
+% G = [[], [], 3, "Partida en curso.", StackMode]
+% Area = []
+
+
+getPiezasDisponibles(G, PiezasDisponibles):-
+    nthCard(1, G, PiezasDisponibles).
+
+% Operaciones
+% cardsSet([1,2,3],3,7,43435,CS), 
+% dobbleGame(3,CS, StackMode, 1000, G), getPiezasDisponibles (G, PiezasDisponibles).
+
+% CS = [3, 2, 1], [4, 5, 1], [6, 7, 1], [4, 6, 2], [5, 7, 2], [4, 7, 3], [5, 6, 3]]
+% Mode = StackMode
+% G = [[], [], 3, "Partida en curso.", StackMode]
+% PiezasDisponibles = []
+
+
+
+getTurns(G, Turns):-
+    nthCard(2, G, Turns).
+
+% Operaciones
+% cardsSet([1,2,3],3,7,43435,CS), 
+% dobbleGame(3,CS, StackMode, 1000, G), getTurns(G, Turns).
+
+% CS = [3, 2, 1], [4, 5, 1], [6, 7, 1], [4, 6, 2], [5, 7, 2], [4, 7, 3], [5, 6, 3]]
+% Mode = StackMode
+% G = [[], [], 3, "Partida en curso.", StackMode]
+% Turns = []
+
+
+
+getPlayers(G, Players):-
+    nthCard(3, G, Players).
+
+% Operaciones
+% cardsSet([1,2,3],3,7,43435,CS), 
+% dobbleGame(3,CS, StackMode, 1000, G), getPlayers(G, Players).
+
+% CS = [3, 2, 1], [4, 5, 1], [6, 7, 1], [4, 6, 2], [5, 7, 2], [4, 7, 3], [5, 6, 3]]
+% Mode = StackMode
+% G = [[], [], 3, "Partida en curso.", StackMode]
+% Players = []
+
+getNumPlayers(G, NumPlayers):-
+    nthCard(4, G, NumPlayers).
+
+% Operaciones
+% cardsSet([1,2,3],3,7,43435,CS), 
+% dobbleGame(3,CS, StackMode, 1000, G), getNumPlayers(G, NumPlayers).
+
+% CS = [3, 2, 1], [4, 5, 1], [6, 7, 1], [4, 6, 2], [5, 7, 2], [4, 7, 3], [5, 6, 3]]
+% Mode = StackMode
+% G = [[], [], 3, "Partida en curso.", StackMode]
+% NumPlayers = 3
+
+
+getStatus(G, Status):-
+    nthCard(5, G, Status).
+
+% Operaciones
+% cardsSet([1,2,3],3,7,43435,CS), 
+% dobbleGame(3,CS, StackMode, 1000, G), getStatus(G, Status).
+
+% CS = [3, 2, 1], [4, 5, 1], [6, 7, 1], [4, 6, 2], [5, 7, 2], [4, 7, 3], [5, 6, 3]]
+% Mode = StackMode
+% G = [[], [], 3, "Partida en curso.", StackMode]
+% Status = "Partida en curso."
+
+
+getMode(G, Mode):-
+    nthCard(6, G, Mode).
+  
+% Operaciones
+% cardsSet([1,2,3],3,7,43435,CS), 
+% dobbleGame(3,CS, StackMode, 1000, G), getMode(G, Mode).
+
+% CS = [3, 2, 1], [4, 5, 1], [6, 7, 1], [4, 6, 2], [5, 7, 2], [4, 7, 3], [5, 6, 3]]
+% Mode = StackMode
+% G = [[], [], 3, "Partida en curso.", StackMode]
+% Mode = StackMode
+
 
 dobbleGameRegister(User, G, GameOut):-
-    User,G,GameOut.
+    getAreaDeJuego(G, Area),
+    getPiezasDisponibles(G, PiezasDisponibles),
+    getTurns(G, Turns),
+    getPlayers(G, Players),
+    getNumPlayers(G, NumPlayers),
+    getStatus(G, Status),
+    getMode(G, Mode),
+    append(Players, [User], NewPlayers),
+    NewNumPlayers is NumPlayers+1,
+    GameOut = [Area, PiezasDisponibles,Turns,NewPlayers,NewNumPlayers,Status,Mode].
+
+% Operaciones
+% cardsSet([1,2,3],3,7,43435,CS),
+% dobbleGame(3,CS, StackMode, 1000, G), 
+% dobbleGameRegister("Basti",G,GameOut).
