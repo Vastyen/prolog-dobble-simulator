@@ -536,7 +536,9 @@ dobbleGameToString(G, String):-
 % Ejemplos
 % ----------------------------------------------------
 % ----------------------------------------------------
+
 % Ejemplos cardsSet
+
 % cardsSet([1,2,3],3,7,43435,CS).
 % CS = [[3, 2, 1], [4, 5, 1], [6, 7, 1], [4, 6, 2], [5, 7, 2], [4, 7, 3], [5, 6, 3]]
 
@@ -547,6 +549,7 @@ dobbleGameToString(G, String):-
 % ----------------------------------------------------
 
 % Ejemplos recorrerCarta
+
 % recorrerCarta([1,2,2]).
 % false
 
@@ -574,10 +577,10 @@ dobbleGameToString(G, String):-
 
 % Ejemplos isPrime
 
-isPrime (3)
-true
-isPrime (4) 
-false
+% isPrime (3)
+% true
+% isPrime (4) 
+% false
 
 % ----------------------------------------------------
 % ----------------------------------------------------
