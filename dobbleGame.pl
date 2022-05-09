@@ -33,6 +33,8 @@
 % maxC: integer
 % seed: integer
 % CS: cards
+
+% Predicados
 % cardsSet(Elements, NumE, MaxC, Seed, CS)
 
 
@@ -67,34 +69,46 @@ cardsSet(Elements, NumE, MaxC, Seed, CS):-
 % cardsSet([1,2,3,4,5],18,57,43435,CS).
 % false
 
-%_____________________________
+% ----------------------------------------------------
+% ----------------------------------------------------
 
 
-
+% Descripcion: recorre una carta y verifica que el elemento que este sea unico.
+% Dominio: Una lista de elementos (Carta).
 recorrerCarta([]):-!.
 recorrerCarta([Cabeza|Cola]):-
     not(member(Cabeza, Cola)),
     recorrerCarta(Cola).
 
-isDobble([]):-!.
-isDobble([Cabeza|Cola]):-
+% ----------------------------------------------------
+% ----------------------------------------------------
+
+
+% Descripcion: recorre una lista de cartas y verifica que la carta sea unica.
+% Dominio: Una lista de elementos (Mazo o cardsSet).
+cardsSetIsDobble([]):-!.
+cardsSetIsDobble([Cabeza|Cola]):-
     recorrerCarta(Cabeza),
     not(member(Cabeza, Cola)),
-    isDobble(Cola).
+    cardsSetIsDobble(Cola).
 
 % Operaciones
-% isDobble([[13, 19, 25, 31, 37, 50, 56, 8], 
+% cardsSetIsDobble([[13, 19, 25, 31, 37, 50, 56, 8], 
 % [14, 20, 26, 32, 38, 44, 57, 8], [15, 21, 27, 33, 39, 45, 51, 8]]).
 % true.
 
-% cardsSet([1,2,3],3,7,43435,CS), isDobble(CS).
+% cardsSet([1,2,3],3,7,43435,CS), cardsSetIsDobble(CS).
 % CS = [[3, 2, 1], [4, 5, 1], [6, 7, 1], [4, 6, 2], [5, 7, 2], [4, 7, 3], [5, 6, 3]]
 
-% isDobble([[13, 13, 13, 13, 13, 50, 13, 13], 
+% cardsSetIsDobble([[13, 13, 13, 13, 13, 50, 13, 13], 
 % [14, 20, 26, 13, 38, 13, 13, 8], [13, 13, 13, 33, 13, 43, 13, 8]]).
 % false.
 
-% Verificar si es primo
+% ----------------------------------------------------
+% ----------------------------------------------------
+
+% Descripcion: Verifica si un numero ingresado es primo o no.
+% Dominio: Numero.
 isPrime(Number):-
     not((OtherNumber is Number-1,between(2,OtherNumber,N), 0 is mod(Number,N))),
     not(Number is 1).
@@ -103,19 +117,23 @@ isPrime(Number):-
 % isPrime(3)
 % true
 
-%_____________________________
 
 
+% ----------------------------------------------------
+% ----------------------------------------------------
+
+% Descripcion: Entrega una n cantidad de elementos de una lista.
+% Dominio: Una lista de cartas, la cantidad de cartas, la lista resultante.
 maxCards(_, 0, []).
 maxCards([Cabeza|Cola], MaxC, [Cabeza|Result]):-
     NewMaxC is MaxC - 1,
     maxCards(Cola, NewMaxC, Result).
 
+% ----------------------------------------------------
+% ----------------------------------------------------
 
-% 2. Largo de una lista
-% 2.1 La consulta también sirve para verificar si una lista es vacía.
-% largoLista(Lista, Largo) es verdadero si Largo es el número de elementos de una lista.
-
+% Descripcion: Encuentra el largo de una lista de elementos
+% Dominio: Una lista de elementos y el resultado (largo).
 largoLista( [], 0 ).
 largoLista( [_|Resto], Largo ) :-
 	largoLista( Resto, LargoAcumulado ),
@@ -127,12 +145,21 @@ largoLista( [_|Resto], Largo ) :-
 % ?- len([], Largo).
 % L=0.
 
-% 2.2 Agregar una carta a una lista de cartas.
+% ----------------------------------------------------
+% ----------------------------------------------------
+
+% Descripcion: Agrega una carta a una lista de cartas (o una lista a una lista de elementos).
+% Dominio: Una lista de elementos inicial, la nueva lista y la lista resultante.
 agregarCarta([],L2,L2).
 agregarCarta([Cabeza|L1],L2,[Cabeza|L3]):- 
     agregarCarta(L1,L2,L3).
    
-% 2.3 Crea un mazo de cartas, recibe la cantidad de elementos que contiene el cardsSet.
+% ----------------------------------------------------
+% ----------------------------------------------------
+
+% Descripción: Crea un mazo en simulación al código en JavaScript. 
+% Se utilizan varias recursiones para lograr esto, ya que se realiza la simulación de
+% 3 Ciclos for. 
 primerCiclo(I,_,I2,[1]):-
     I2 is I+1,!.
 primerCiclo(I,J,K,[Cabeza|Cuerpo]):- 
@@ -170,13 +197,14 @@ ordenNN(X,Y,K):-
     agregarCarta(Q,Z,K),
     NuevoY is Y+1, ordenNN(X,NuevoY,Z).
 
+% Descripción: Crea el mazo de cartas. (lista de listas).
+% Dominio: El orden del juego (entero) y una lista de salida (lista de listas).
 crearMazo(OrdenJuego,Mazo):-
     OrdenPrimeraCarta is OrdenJuego+1,
     primeraCarta(OrdenPrimeraCarta,CartaA), 
     ordenN(OrdenJuego,1,CartaB),
     ordenNN(OrdenJuego,1,CartaC),
 	agregarCarta([CartaA|CartaB],CartaC,Mazo).
-
 
 % Consultas
 % crearMazo(3, Mazo).
@@ -185,16 +213,26 @@ crearMazo(OrdenJuego,Mazo):-
 % [5, 9, 13, 3], [6, 10, 11, 3], [7, 8, 12, 3], [5, 10, 12, 4], 
 % [6, 8, 13, 4], [7, 9, 11, 4]]
 
+% ----------------------------------------------------
+% ----------------------------------------------------
 
-%2.4 nthCard, recibe y retorna un número de carta dentro del mazo.
-
+% Descripción: Recibe y retorna un número de carta dentro del mazo.
+% Dominio: Numero de la posición, lista de elementos y el elemento a retornar.
 nthElement(Posicion, Lista, Elemento):-
     encontrarCarta(Posicion, Lista,Elemento).
 
 
-nthCard(NumeroCarta, CS, Carta):-
+% ----------------------------------------------------
+% ----------------------------------------------------
+
+% Descripción: Recibe y retorna un número de carta dentro del mazo.
+% Dominio: Numero de la posición, lista de elementos y el elemento a retornar.
+cardsSetNthCard(NumeroCarta, CS, Carta):-
     encontrarCarta(NumeroCarta, CS,Carta).
 
+
+% Descripción: Este predicado encapsulado se encarga de encontrar la carta o elemento n.
+% Dominio: Numero de la posición, lista de elementos y el elemento a retornar.
 encontrarCarta(0, [],_).
 encontrarCarta(0,[Salida|_],Carta):-
     Carta = Salida,!.
@@ -205,11 +243,12 @@ encontrarCarta(NumeroCarta, [_|MazoCuerpo], Carta):-
 % nthCard(0, 3, Carta).
 % Carta = [4, 3, 2, 1]
     
-
-%2.5 findTotalCards, a partir de una carta de muestra, determina cuantas
-% cartas pueden ser creadas.
-findTotalCards([], 0).
-findTotalCards(Carta, TotalCards):-
+% ----------------------------------------------------
+% ----------------------------------------------------
+% Descripción: A partir de una carta de muestra, determina cuantas cartas pueden ser creadas.
+% Dominio: Una carta y el resultado (numero) de posibles cartas.
+cardsSetFindTotalCards([], 0).
+cardsSetFindTotalCards(Carta, TotalCards):-
    largoLista(Carta, Largo),
    TotalCards is (Largo*Largo-Largo+1).
 
@@ -217,24 +256,25 @@ findTotalCards(Carta, TotalCards):-
 % findTotalCards([3,5,3,2], TotalCards).
 % TotalCards = 13
 
-% -------------------- En proceso --------------------
-%%2.6 MissingCards.
 
+% ----------------------------------------------------
+% ----------------------------------------------------
+
+% Descripción: A partir de un mazo, se calcula las cartas faltantes para que sea un
+% mazo valido para jugar.
+% Dominio: Carta de ejemplo, mazo valido.
 calcularOrden(NumeroElementos, Orden):-
     Orden is NumeroElementos-1.
-    
-missingCards([PrimeraCarta|_], MissingCS):-
+cardsSetMissingCards([PrimeraCarta|_], MissingCS):-
     largoLista(PrimeraCarta, NumeroElementos),
     calcularOrden(NumeroElementos, Orden),
     crearMazo(Orden, MissingCS).
     
-% -------------------- En proceso --------------------
-% ----------------------------------------------------
 % ----------------------------------------------------
 % ----------------------------------------------------
 
-% cardsSetToString. 
-% Convierte un mazo (o lista de cartas) en un string.
+% Descripción: Convierte un mazo (o lista de cartas) en un string.
+% Dominio: Mazo de cartas y retorna un String con el mazo convertido en String.
 cadenaCarta(Carta,String):-
     atomics_to_string(Carta, ', ',Coma),
     string_concat("Carta: ", Coma,Wr),
@@ -317,7 +357,6 @@ getPiezasDisponibles(G, PiezasDisponibles):-
 % G = [["Area: "], ["Piezas Disponibles: "], 0, ["PlayersScore: "], ["Players: "], 3, "Partida en curso.", StackMode]
 
 % PiezasDisponibles = []
-
 
 
 getTurns(G, Turns):-
@@ -529,7 +568,11 @@ dobbleGameStatus(G, GameStatus):-
 
 % Operaciones
 % cardsSet([1,2,3],3,7,43435,CS), dobbleGame(3,CS, StackMode, 1000, G), 
-% dobbleGameRegister("Gonzalo",G,GameOut), dobbleGameStatus(GameOut, Status).
+% dobbleGameRegister("Gonzalo",G,GameOut), dobbleGameScore(GameOut, "Gonzalo", Score).
+%% CS = [[3, 2, 1], [4, 5, 1], [6, 7, 1], [4, 6, 2], [5, 7, 2], [4, 7, 3], [5, 6, 3]]
+% Mode = StackMode
+% G = [["Area: "], ["Piezas Disponibles: "], 0, ["PlayersScore: "], ["Players: "], 3, "Partida en curso.", StackMode]
+% GameOut = [["Piezas Disponibles: "], 2|_890], [_900, "Piezas Disponibles: "], 1, ["PlayersScore: "], ["Players: ", "Gonzalo"], 2, "Partida en curso.", StackMode]
 % Status = "Partida en curso."
 	
 dobbleGameScore(G, User, Score):-
@@ -538,6 +581,16 @@ dobbleGameScore(G, User, Score):-
     nth0(Pos, Players, User),
     nthElement(Pos, PlayersScore, Finding),
     Score = Finding.
+
+% Operaciones
+% cardsSet([1,2,3],3,7,43435,CS), dobbleGame(3,CS, StackMode, 1000, G), 
+% dobbleGameRegister("Gonzalo",G,GameOut), dobbleGameScore(GameOut, "Gonzalo", Score).
+%% CS = [[3, 2, 1], [4, 5, 1], [6, 7, 1], [4, 6, 2], [5, 7, 2], [4, 7, 3], [5, 6, 3]]
+% Mode = StackMode
+% G = [["Area: "], ["Piezas Disponibles: "], 0, ["PlayersScore: "], ["Players: "], 3, "Partida en curso.", StackMode]
+% GameOut = [["Piezas Disponibles: "], 2|_890], [_900, "Piezas Disponibles: "], 1, ["PlayersScore: "], ["Players: ", "Gonzalo"], 2, "Partida en curso.", StackMode]
+% Score = Score
+
     
 dobbleGameToString(G, String):-
     getTurns(G, Turns),
