@@ -40,7 +40,6 @@
 % tercerCiclo(X,Y,K2,Cuerpo).
 % ordenN(OrdenJuego,1,CartaB).
 % ordenNN(OrdenJuego,1,CartaC).
-% agregarCarta([CartaA|CartaB],CartaC,Mazo).
 % nthElement(Posicion, Lista, Elemento).
 % cardsSetNthCard(NumeroCarta, CS, Carta).
 % encontrarCarta(NumeroCarta, MazoCuerpo, Carta).
