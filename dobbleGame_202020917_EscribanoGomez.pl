@@ -46,6 +46,7 @@
 % encontrarCarta(NumeroCarta, MazoCuerpo, Carta).
 % cardsSetFindTotalCards(Carta, TotalCards).
 % calcularOrden(NumeroElementos, Orden).
+% cardsSetMissingCards(Carta, CS).
 % cadenaCarta(Carta, String).
 % cadenaCartas(ListaCartas, String).
 % cardsSetToString(CS, String).
