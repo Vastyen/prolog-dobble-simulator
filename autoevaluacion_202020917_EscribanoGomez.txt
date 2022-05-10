@@ -1,0 +1,13 @@
+Requerimientos Funcionales            Evaluación
+___________________________     |    ____________
+TDAs					  1cardsSetIsDobble		          1
+cardsSetNthCard				  1
+cardsSetFindTotalCards		          1
+cardsSetMissingCards			 0.5
+cardsSetToString			  1
+dobbleGameRegister			  1
+dobbleGameWhoseTurnIsIt			 0.75
+dobbleGamePlay				 0.5
+dobbleGameStatus			 0.75
+dobbleGameScore				 0.75
+dobbleGameToString		   	 0.5
