@@ -4,7 +4,7 @@
 Universidad de Santiago de Chile            
 Departamento de Ingeniería Informática                
 Paradigma: Lógico           
-Fecha de Entrega: 6 de mayo de 2022                     
+Fecha de Entrega: 9 de mayo de 2022                     
 Lenguaje de Programación: Prolog               
 Desarrollador: Bastián Escribano - @vastien              
 
