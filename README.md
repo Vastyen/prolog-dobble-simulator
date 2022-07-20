@@ -6,7 +6,8 @@ Departamento de Ingeniería Informática
 Paradigma: Lógico           
 Fecha de Entrega: 9 de mayo de 2022                     
 Lenguaje de Programación: Prolog               
-Desarrollador: Bastián Escribano - @vastien              
+Desarrollador: Bastián Escribano - @vastien
+Calificación: 5.2
 
 ## Paradigma Lógico
 La programación lógica es un tipo de paradigma de programación dentro del paradigma de programación declarativa. 
