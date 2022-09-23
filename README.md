@@ -12,7 +12,7 @@ _________________________________________________________________
 
 Other Languages
 
-* [Spanish](https://github.com/vastien/prolog-dobble-simulator/READMEes.md)
+* [Spanish](https://github.com/vastien/prolog-dobble-simulator/blob/main/READMEes.md)
 
 _________________________________________________________________
 
